@@ -8,7 +8,7 @@ chrome_options.add_argument("--headless")
 driver = None
 
 
-def begin(driver_path: str, username: str = 'ubnt', password: str = 'ubnt'):
+def begin(driver_path: str, username: str = 'ubnt', password: str = 'ubnt', ip='192.168.1.20'):
     global driver
 
     print('Starting ChromeDriver...')
@@ -16,7 +16,7 @@ def begin(driver_path: str, username: str = 'ubnt', password: str = 'ubnt'):
     print('Driver started.')
 
     print('Logging in...')
-    driver.get('http:192.168.1.20/login.cgi')
+    driver.get('http:{}/login.cgi'.format(ip))
 
     user_form = driver.find_element_by_id('username')
     pass_form = driver.find_element_by_id('password')
@@ -30,5 +30,5 @@ def begin(driver_path: str, username: str = 'ubnt', password: str = 'ubnt'):
 
 
 def fetch_signal() -> int:
-    driver.get('http:192.168.1.20/signal.cgi')
+    driver.get('http:{}/signal.cgi'.format(ip))
     return json.loads(driver.find_element_by_tag_name('body').text)['signal']
